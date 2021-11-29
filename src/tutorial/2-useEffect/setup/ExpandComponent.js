@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+
+const solidStar = <FontAwesomeIcon icon={faStar} />;
+
 //const repos_url = 'https://api.github.com/users/mojombo/repos';
 
 export const Wrapper = ({ repos_url }) => {
@@ -42,9 +47,7 @@ export const Wrapper = ({ repos_url }) => {
     <>
       <h4>
         {displayStars(stars)}
-        <span>
-          <i class='fas fa-star'></i>
-        </span>
+        <span>{solidStar}</span>
       </h4>
 
       <button
