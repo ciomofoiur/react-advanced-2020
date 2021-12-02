@@ -11,12 +11,15 @@ export const Wrapper = ({ repos_url }) => {
   const [cardVisibility, setCardVisibility] = useState(false);
   const [repos, setRepos] = useState([]);
   const [stars, setStars] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getRepos = async () => {
+    setIsLoading(true);
     const response = await fetch(repos_url);
     const repos = await response.json();
     setRepos(repos);
     countingStars(repos);
+    setIsLoading(false);
     console.log(repos);
   };
 
@@ -63,20 +66,28 @@ export const Wrapper = ({ repos_url }) => {
       >
         Expand/Collapse
       </button>
-      {cardVisibility ? <ExpandComponent repos={repos} /> : null}
+      {cardVisibility ? (
+        <ExpandComponent repos={repos} isLoading={isLoading} />
+      ) : null}
     </>
   );
 };
 
-export const ExpandComponent = ({ repos }) => {
+export const ExpandComponent = ({ repos, isLoading }) => {
   return (
     <>
-      <h4>Repositories</h4>
-      <ul>
-        {repos.map((repo) => {
-          return <li>{repo.name}</li>;
-        })}
-      </ul>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          <h4>Repositories</h4>
+          <ul>
+            {repos.map((repo) => {
+              return <li>{repo.name}</li>;
+            })}
+          </ul>
+        </div>
+      )}
     </>
   );
 };
@@ -90,10 +101,10 @@ export default ExpandComponent;
 //dots la <li>  ✓
 //butonul sa arate a buton Win11    ✓
 //adaug o steluta langa stars   ✓
-//  !install font awesome component that offers React support and use it
+//  !install font awesome component that offers React support and use it  ✓
 //- pana nu se calculeaza nr de stele   ✓
 //cand fac collapse sa sterg nr de stele si revin la -  ✓
-//  !afisez loading sau 'icon' pana se aduc datele in expand
+//  !afisez loading sau 'icon' pana se aduc datele in expand    ✓
 
 //creez un repo si tot fac commits constant     ✓
 
