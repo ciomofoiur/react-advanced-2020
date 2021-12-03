@@ -35,7 +35,7 @@
 #### React Router
 
 ## TO DO List
-- [] Go through useReducer chapter
-- [] Check if GitHub API supports paging system
-- [] Implement a paging system in my repos list
-- [] Implement Tabs project
+- [ ] Go through useReducer chapter
+- [ ] Check if GitHub API supports paging system
+- [ ] Implement a paging system in my repos list
+- [ ] Implement Tabs project
