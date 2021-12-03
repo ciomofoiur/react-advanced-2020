@@ -38,4 +38,7 @@
 - [ ] Go through useReducer chapter
 - [ ] Check if GitHub API supports paging system
 - [ ] Implement a paging system in my repos list
+  - First w/o GitHub API support
+  - Spread users in 3/page
+  - Create a component that displays my pages
 - [ ] Implement Tabs project
