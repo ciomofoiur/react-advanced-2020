@@ -41,4 +41,5 @@
   - First w/o GitHub API support
   - Spread users in 3/page
   - Create a component that displays my pages
+- [ ] Bring all users in a list and after i select only 1, show his details: repos list with stars & near user:totalNumberStars
 - [ ] Implement Tabs project
