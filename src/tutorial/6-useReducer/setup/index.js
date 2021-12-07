@@ -3,7 +3,28 @@ import Modal from './Modal';
 import { data } from '../../../data';
 // reducer function
 
-const reducer = (state, action) => {};
+const reducer = (state, action) => {
+  console.log(state);
+  if (action.type === 'ADD_ITEM') {
+    const newPeople = [...state.people, action.payload];
+    return {
+      ...state,
+      people: newPeople,
+      isModalOpen: true,
+      modalContent: 'item added',
+    };
+  }
+
+  if (action.type === 'NO_VALUE') {
+    return {
+      ...state,
+      isModalOpen: true,
+      modalContent: 'please enter a value',
+    };
+  }
+
+  throw new Error('no matchin action type');
+};
 
 const defaultState = {
   people: [],
@@ -18,7 +39,11 @@ const Index = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name) {
+      const newItem = { id: new Date().getTime().toString(), name };
+      dispatch({ type: 'ADD_ITEM', payload: newItem });
+      setName('');
     } else {
+      dispatch({ type: 'NO_VALUE' });
     }
   };
 
