@@ -43,3 +43,4 @@
   - Create a component that displays my pages
 - [ ] Bring all users in a list and after i select only 1, show his details: repos list with stars & near user:totalNumberStars
 - [ ] Implement Tabs project
+- [ ] Implement Cart project
