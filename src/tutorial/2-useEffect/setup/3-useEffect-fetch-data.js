@@ -1,27 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { Wrapper } from './ExpandComponent';
+import PagesComponent from './PagesComponent';
+import { reducer, defaultState } from './reducer';
 
 const url = 'https://api.github.com/users';
 
 const UseEffectFetchData = () => {
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
+  const [state, dispatch] = useReducer(reducer, defaultState);
 
-  const getUsers = async () => {
+  const fetchUsers = async () => {
     const response = await fetch(url);
     const users = await response.json();
-    setUsers(users); // will crash the browser w/o the dep. array
-    // console.log(users);
+    return users;
+  };
+
+  const initializeUsers = (users) => {
+    dispatch({ type: 'INITIALIZE_USERS', payload: users });
   };
 
   useEffect(() => {
-    getUsers();
+    (async () => {
+      const users = await fetchUsers();
+      initializeUsers(users);
+    })();
   }, []);
+
+  const handlePage = (page) => {
+    dispatch({ type: 'PAGE_CLICK', payload: page });
+  };
 
   return (
     <>
       <h3>github users</h3>
       <ul className='users'>
-        {users.map((user) => {
+        {state.pagedPeople.map((user) => {
           const { id, login, avatar_url, html_url, repos_url } = user;
           return (
             <li className='items' key={id}>
@@ -35,6 +48,11 @@ const UseEffectFetchData = () => {
           );
         })}
       </ul>
+      <PagesComponent
+        pagedPeople={state.pagedPeople}
+        handlePage={handlePage}
+        totalNumberOfUsers={state.totalNumberOfUsers}
+      />
     </>
   );
 };

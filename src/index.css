@@ -130,6 +130,7 @@ p {
     line-height: 1;
   }
 }
+
 /*  global classes */
 
 /* section */
@@ -342,4 +343,10 @@ p {
 
 .items {
   list-style-type: disc !important;
+}
+
+.page {
+  text-decoration: none;
+  padding-bottom: 50px;
+  font-size: larger;
 }
