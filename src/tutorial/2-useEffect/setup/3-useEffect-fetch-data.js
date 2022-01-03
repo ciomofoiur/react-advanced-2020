@@ -35,14 +35,15 @@ const UseEffectFetchData = () => {
       <h3>github users</h3>
       <ul className='users'>
         {state.pagedPeople.map((user) => {
-          const { id, login, avatar_url, html_url, repos_url } = user;
+          const { id, login, avatar_url, html_url, repos_url, starred_url } =
+            user;
           return (
             <li className='items' key={id}>
               <img src={avatar_url} alt={login} />
               <div>
                 <h4>{login}</h4>
                 <a href={html_url}>Profile Link</a> <br />
-                <Wrapper repos_url={repos_url} />
+                <Wrapper repos_url={repos_url} starred_url={starred_url} />
               </div>
             </li>
           );

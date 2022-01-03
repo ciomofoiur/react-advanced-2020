@@ -6,12 +6,16 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 const solidStar = <FontAwesomeIcon icon={faStar} />;
 
 //const repos_url = 'https://api.github.com/users/mojombo/repos';
+const stars_url = 'https://api.github.com/users/mojombo/starred';
 
-export const Wrapper = ({ repos_url }) => {
+export const Wrapper = ({ repos_url, starred_url }) => {
   const [cardVisibility, setCardVisibility] = useState(false);
   const [repos, setRepos] = useState([]);
   const [stars, setStars] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [starredRepos, setStarredRepos] = useState([]);
+  const [isStarsExpanded, setIsStarsExpanded] = useState(false);
 
   const getRepos = async () => {
     setIsLoading(true);
@@ -23,11 +27,24 @@ export const Wrapper = ({ repos_url }) => {
     console.log(repos);
   };
 
+  const getStars = async () => {
+    const response = await fetch(stars_url);
+    const starredRepos = await response.json();
+    setStarredRepos(starredRepos);
+    console.log(starredRepos);
+  };
+
   useEffect(() => {
     if (cardVisibility) {
       getRepos();
     }
   }, [cardVisibility]);
+
+  useEffect(() => {
+    if (isStarsExpanded) {
+      getStars();
+    }
+  }, [isStarsExpanded]);
 
   const countingStars = (repos) => {
     let stars = 0;
@@ -39,7 +56,7 @@ export const Wrapper = ({ repos_url }) => {
   };
 
   const displayStars = (myStars) => {
-    if (myStars === null) {
+    if (myStars === null || myStars === 0) {
       return '-';
     } else {
       return myStars;
@@ -56,9 +73,9 @@ export const Wrapper = ({ repos_url }) => {
       <button
         className='myButton'
         onClick={() => {
-          console.log('first', cardVisibility);
+          // console.log('first', cardVisibility);
           setCardVisibility(!cardVisibility);
-          console.log('second', cardVisibility);
+          // console.log('second', cardVisibility);
           if (cardVisibility) {
             setStars(null);
           }
@@ -69,11 +86,26 @@ export const Wrapper = ({ repos_url }) => {
       {cardVisibility ? (
         <ExpandComponent repos={repos} isLoading={isLoading} />
       ) : null}
+
+      <h5>
+        {displayStars(starredRepos.length)}
+        <span>{solidStar} starred repos</span>
+      </h5>
+
+      <button
+        id='btn2'
+        onClick={() => {
+          setIsStarsExpanded(!isStarsExpanded);
+        }}
+      >
+        {solidStar} Stars
+      </button>
+      {isStarsExpanded ? <StarsComponent starredRepos={starredRepos} /> : null}
     </>
   );
 };
 
-export const ExpandComponent = ({ repos, isLoading }) => {
+const ExpandComponent = ({ repos, isLoading }) => {
   return (
     <>
       {isLoading ? (
@@ -92,7 +124,21 @@ export const ExpandComponent = ({ repos, isLoading }) => {
   );
 };
 
-export default ExpandComponent;
+const StarsComponent = ({ starredRepos }) => {
+  return (
+    <>
+      <div>
+        <ul>
+          {starredRepos.map((repo) => {
+            return <li>{repo.name}</li>;
+          })}
+        </ul>
+      </div>
+    </>
+  );
+};
+
+// export default ExpandComponent;
 
 //also fetch repos (title) and show them in the card after i expand    ✓
 // + show total stars from all repos   "stargazers_count": 114     ✓
@@ -108,4 +154,4 @@ export default ExpandComponent;
 
 //creez un repo si tot fac commits constant     ✓
 
-//useReducer -> refactor this app
+//useReducer -> refactor this app     ✓
