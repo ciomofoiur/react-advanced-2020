@@ -41,6 +41,6 @@
   - First w/o GitHub API support
   - Spread users in 3/page
   - Create a component that displays my pages
-- [ ] Bring all users in a list and after I select only 1, show his details: repos list with stars & near user: totalNumberStars
-- [ ] Implement Tabs project
-- [ ] Implement Cart project
+- [x] Bring all users in a list and after I select only 1, show his details: repos list with stars & near user: totalNumberStars
+- [x] Implement Tabs project
+- [x] Implement Cart project
